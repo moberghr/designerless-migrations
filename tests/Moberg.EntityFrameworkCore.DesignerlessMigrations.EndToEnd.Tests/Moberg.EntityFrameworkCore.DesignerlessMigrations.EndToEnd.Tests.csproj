@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Drives the real tools against a copy of samples/NpgsqlSample consuming freshly packed packages: dotnet ef
+    (add, remove and its guards, script), dotnet publish, and tools/convert-to-designerless.cs. Needs Docker and git.
+  -->
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" VersionOverride="$(NpgsqlEfCoreTestVersion)" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+  </ItemGroup>
+
+</Project>

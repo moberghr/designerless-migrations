@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Migrations that break each convention on purpose, in their own assembly so they don't leak into other fixtures. -->
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+    <RootNamespace>ConventionFixtures</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" VersionOverride="$(NpgsqlEfCoreTestVersion)" />
+  </ItemGroup>
+
+</Project>

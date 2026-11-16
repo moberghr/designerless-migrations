@@ -1,0 +1,6 @@
+<Project>
+  <!-- File-based apps pin their packages with #:package. -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Runtime support for designerless EF Core migrations on PostgreSQL. Without a Designer target model EF ignores oldType, so a nullability-only AlterColumn would also emit ALTER COLUMN ... TYPE (an ACCESS EXCLUSIVE lock). Call options.UseDesignerlessMigrations() after UseNpgsql().</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+  </ItemGroup>
+
+</Project>

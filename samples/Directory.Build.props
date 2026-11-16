@@ -1,0 +1,16 @@
+<Project>
+
+  <!--
+    Samples are standalone consumers: they don't import the repo's Directory.Build.props and they reference the
+    packages by version, exactly as a real project would. Build them against freshly packed packages with
+    eng/test-samples.sh (it passes a unique DesignerlessMigrationsVersion, so the NuGet cache is never stale).
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DesignerlessMigrationsVersion Condition="'$(DesignerlessMigrationsVersion)' == ''">10.0.0</DesignerlessMigrationsVersion>
+  </PropertyGroup>
+
+</Project>

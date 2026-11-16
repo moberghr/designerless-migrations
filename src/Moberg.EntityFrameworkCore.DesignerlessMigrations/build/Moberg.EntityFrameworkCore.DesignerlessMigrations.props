@@ -1,0 +1,14 @@
+<Project>
+  <!--
+    Registers the designerless scaffolder with dotnet ef and the Package Manager Console. EF reads
+    [DesignTimeServicesReference] from the startup assembly (DesignTimeServicesBuilder.ConfigureReferencedServices).
+    The attribute lives in Microsoft.EntityFrameworkCore, so no reference to EF Design is needed to compile it, and
+    at runtime it is only a string: nothing is loaded from this package.
+    Opt out with <DesignerlessMigrationsRegisterDesignTimeServices>false</DesignerlessMigrationsRegisterDesignTimeServices>.
+  -->
+  <ItemGroup Condition="'$(DesignerlessMigrationsRegisterDesignTimeServices)' != 'false'">
+    <AssemblyAttribute Include="Microsoft.EntityFrameworkCore.Design.DesignTimeServicesReferenceAttribute">
+      <_Parameter1>Moberg.EntityFrameworkCore.DesignerlessMigrations.DesignerlessDesignTimeServices, Moberg.EntityFrameworkCore.DesignerlessMigrations</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>

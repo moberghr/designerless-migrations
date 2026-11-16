@@ -1,0 +1,3 @@
+<Project>
+  <!-- tools/ holds standalone file-based apps (dotnet run <file>.cs); keep the repo's package build settings out. -->
+</Project>

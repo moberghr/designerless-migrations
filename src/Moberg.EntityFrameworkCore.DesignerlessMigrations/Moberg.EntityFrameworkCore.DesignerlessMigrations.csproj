@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Single-file EF Core migrations: dotnet ef migrations add writes one file with [DbContext] and [Migration] on the class and no .Designer.cs. Includes a safe migrations remove (model snapshot restored from git) and convention checks for tests. Design-time only: never published with your app.</Description>
+    <!-- Like Microsoft.EntityFrameworkCore.Design: consumers get PrivateAssets=all, so it never flows to dependants or into publish output. -->
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <!-- EF Design's build props turn this on for dotnet ef startup projects; a library doesn't need a runtimeconfig. -->
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="build\$(PackageId).props" Pack="true" PackagePath="build\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Moberg.EntityFrameworkCore.DesignerlessMigrations.Tests" />
+  </ItemGroup>
+
+</Project>

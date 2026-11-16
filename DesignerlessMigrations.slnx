@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql.csproj" />
+    <Project Path="src/Moberg.EntityFrameworkCore.DesignerlessMigrations/Moberg.EntityFrameworkCore.DesignerlessMigrations.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.ConventionFixtures/Moberg.EntityFrameworkCore.DesignerlessMigrations.ConventionFixtures.csproj" />
+    <Project Path="tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.EndToEnd.Tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.EndToEnd.Tests.csproj" />
+    <Project Path="tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql.Tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql.Tests.csproj" />
+    <Project Path="tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.Tests/Moberg.EntityFrameworkCore.DesignerlessMigrations.Tests.csproj" />
+  </Folder>
+</Solution>
