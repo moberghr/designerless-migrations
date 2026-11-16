@@ -1,0 +1,33 @@
+<Project>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+    <!-- The latest 10.0 patches, used by test projects through VersionOverride. -->
+    <EfCoreTestVersion>10.0.15</EfCoreTestVersion>
+    <NpgsqlEfCoreTestVersion>10.0.3</NpgsqlEfCoreTestVersion>
+  </PropertyGroup>
+
+  <!--
+    Package dependencies. These are the minimum versions consumers get, so they stay as low as possible and
+    don't force EF Core or Npgsql patch upgrades. EF Design is 10.0.2, not 10.0.0: 10.0.0 and 10.0.1 pull
+    System.Security.Cryptography.Xml/Pkcs 9.0.0, which have known vulnerabilities (NU1902/NU1903).
+  -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.2" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+  </ItemGroup>
+
+  <!--
+    Tests run against the latest 10.0 patches, which is what consumers actually run. Test projects raise the
+    floor above with VersionOverride="$(EfCoreTestVersion)".
+  -->
+  <ItemGroup>
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="Testcontainers.PostgreSql" Version="4.16.0" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.3" />
+  </ItemGroup>
+
+</Project>

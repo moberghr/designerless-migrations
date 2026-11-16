@@ -1,0 +1,41 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!--
+    Build hygiene: NuGet audit over transitive packages too, deterministic CI builds, warnings as errors everywhere.
+    Analyzer-rule severities, including the few that are turned off, live in .editorconfig.
+  -->
+  <PropertyGroup>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <!--
+    Shared NuGet package metadata. Package versions follow EF Core majors: 10.x targets EF Core 10.
+    A release takes its version from the release tag (.github/workflows/release.yml); this is the local default.
+  -->
+  <PropertyGroup>
+    <Version>10.0.0</Version>
+    <Authors>Moberg</Authors>
+    <Copyright>Copyright (c) Moberg 2026</Copyright>
+    <PackageProjectUrl>https://github.com/moberghr/designerless-migrations</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/moberghr/designerless-migrations</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>entity-framework-core;efcore;migrations;designer;postgresql;npgsql</PackageTags>
+  </PropertyGroup>
+
+</Project>

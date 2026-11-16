@@ -480,3 +480,10 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# MTK
+tasks/todo.md
+CLAUDE.local.md
+.mtk/
+.claude/.mtk-cache/
+.claude/references.index

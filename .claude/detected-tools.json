@@ -1,0 +1,10 @@
+{
+  "stack": "dotnet",
+  "secondary_stacks": [],
+  "framework": [],
+  "data_layer": ["efcore"],
+  "test_framework": ["xunit", "testcontainers"],
+  "package_manager": "nuget",
+  "deployment": [],
+  "additional": ["npgsql", "shouldly", "moq", "microsoft-testing-platform", "nuget-library", "github-actions"]
+}

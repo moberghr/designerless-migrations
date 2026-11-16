@@ -1,0 +1,72 @@
+name: Release to NuGet
+
+# Publishing a GitHub release (tag e.g. v10.0.0 or 10.0.0) packs both packages under that version and pushes them to
+# nuget.org with trusted publishing (OIDC, no stored API key). Before the first release:
+#   1. nuget.org: add a trusted publishing policy for moberghr/designerless-migrations, workflow release.yml,
+#      environment production.
+#   2. GitHub: create the 'production' environment and the NUGET_USER secret (the nuget.org account name).
+
+on:
+  release:
+    types: [published]
+
+env:
+  DOTNET_VERSION: '10.0'
+  DOTNET_NOLOGO: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  publish:
+    name: Pack and publish
+    # Never publish for a draft release; the published event can fire for a draft in some flows.
+    if: ${{ github.event.release.draft == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: production
+    permissions:
+      contents: read
+      id-token: write  # NuGet trusted publishing (OIDC)
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Version from release tag
+        id: version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          # Package versions follow EF Core majors; these packages target EF Core 10.
+          if [[ ! "$version" =~ ^10\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Release tag $TAG is not a 10.x version." >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        run: dotnet build DesignerlessMigrations.slnx -c Release -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test
+        run: dotnet test --solution DesignerlessMigrations.slnx -c Release --no-build
+
+      - name: Pack
+        run: dotnet pack DesignerlessMigrations.slnx -c Release --no-build -o artifacts/packages -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test samples against the release packages
+        env:
+          DESIGNERLESS_SAMPLE_VERSION: ${{ steps.version.outputs.version }}
+        run: bash eng/test-samples.sh
+
+      # Short-lived API key via trusted publishing (OIDC, no stored secrets).
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Push to NuGet
+        run: dotnet nuget push "artifacts/packages/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate

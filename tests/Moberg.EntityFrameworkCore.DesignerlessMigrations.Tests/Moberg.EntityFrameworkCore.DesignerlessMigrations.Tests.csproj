@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <!--
+    The package's real build props: adds [assembly: DesignTimeServicesReference] to this assembly, which the tests
+    use as dotnet ef's startup assembly. So they prove the attribute, not a copy of it, registers the scaffolder.
+  -->
+  <Import Project="..\..\src\Moberg.EntityFrameworkCore.DesignerlessMigrations\build\Moberg.EntityFrameworkCore.DesignerlessMigrations.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Moberg.EntityFrameworkCore.DesignerlessMigrations\Moberg.EntityFrameworkCore.DesignerlessMigrations.csproj" />
+    <ProjectReference Include="..\Moberg.EntityFrameworkCore.DesignerlessMigrations.ConventionFixtures\Moberg.EntityFrameworkCore.DesignerlessMigrations.ConventionFixtures.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" VersionOverride="$(EfCoreTestVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" VersionOverride="$(EfCoreTestVersion)" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" VersionOverride="$(NpgsqlEfCoreTestVersion)" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+</Project>

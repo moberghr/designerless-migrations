@@ -1,0 +1,12 @@
+{
+  "version": "9.0.0",
+  "installed": "2026-11-16",
+  "source": "https://github.com/moberghr/mtk-agent-toolkit",
+  "coding-guidelines": {
+    "repo": "moberghr/coding-guidelines",
+    "sha": "04399766aac38f0ac1c8719acac262806d558b74",
+    "files": {
+      "CodingStyle.md": "sha256:5b7c9ee12a8d9f449909bd163802e1292c75a0bfbe88e956b72676d60abda639"
+    }
+  }
+}

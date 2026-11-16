@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "captured": "2026-11-16T13:08:55Z",
+  "source": "engineer-interview",
+  "answers": {
+    "hard_nevers": [
+      "Never push or open a PR unless asked, even with green CI.",
+      "Never publish a GitHub release, run release.yml or push to nuget.org without approval.",
+      "Never move the packages off EF Core 10.x / net10.0 or raise dependency floors without approval; consumers inherit them.",
+      "Never relax a migrations-remove refusal (newer file on disk, missing from revision, applied without --force, no git) to make a case pass."
+    ],
+    "failure_modes": [
+      "Claiming behavior (publish output, EF service ordering) without running dotnet ef / dotnet publish to prove it.",
+      "Tests reimplementing production logic or mocking what an end-to-end test should exercise.",
+      "Design-dependent types leaking into the runtime package or consumers, so Assembly.GetTypes() throws in production.",
+      "Rewriting EF-generated code without keeping BOM/line endings and using order, or without failing loudly when the scaffolded shape changes."
+    ],
+    "failure_modes_note": "Engineer selected all options but answered 'no idea': these come from pitfalls found during extraction from an internal project, not from observed agent failures.",
+    "invisible_conventions": [],
+    "branch_pr_workflow": "",
+    "compliance_constraints": [],
+    "done_definition": [
+      "dotnet build DesignerlessMigrations.slnx passes with zero warnings (TreatWarningsAsErrors).",
+      "dotnet test --solution DesignerlessMigrations.slnx passes, including the EndToEnd tests (Docker + git).",
+      "bash eng/test-samples.sh passes against freshly packed packages.",
+      "README.md reflects any behavior or setup change."
+    ],
+    "product_purpose": "",
+    "cross_agent_configs": "agents-md-only"
+  },
+  "skipped": ["invisible_conventions", "branch_pr_workflow", "compliance_constraints", "product_purpose"],
+  "resolved_ambiguities": {}
+}
