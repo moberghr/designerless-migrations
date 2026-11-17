@@ -2,12 +2,15 @@
 
 Single-file EF Core migrations. `dotnet ef migrations add` writes **one file** with `[DbContext]` and `[Migration]` on the class, and **no `.Designer.cs`**. Each Designer file is a full copy of the model, often tens of thousands of lines, and a large project spends a big share of its build time compiling them.
 
+[![NuGet](https://img.shields.io/nuget/v/Moberg.EntityFrameworkCore.DesignerlessMigrations?label=DesignerlessMigrations)](https://www.nuget.org/packages/Moberg.EntityFrameworkCore.DesignerlessMigrations)
+[![NuGet](https://img.shields.io/nuget/v/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql?label=DesignerlessMigrations.Npgsql)](https://www.nuget.org/packages/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql)
+
 You reference the package and that's it: no extra tool, and no design-time project in your repo.
 
 | Package | Kind | What it does |
 | --- | --- | --- |
-| `Moberg.EntityFrameworkCore.DesignerlessMigrations` | design time (development dependency) | Scaffolder picked up by `dotnet ef` automatically. Safe `migrations remove`. Convention checks for tests. Never published with your app. |
-| `Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql` | runtime | `UseDesignerlessMigrations()`: makes migrations without a Designer file generate the same SQL as with one. |
+| [`Moberg.EntityFrameworkCore.DesignerlessMigrations`](https://www.nuget.org/packages/Moberg.EntityFrameworkCore.DesignerlessMigrations) | design time (development dependency) | Scaffolder picked up by `dotnet ef` automatically. Safe `migrations remove`. Convention checks for tests. Never published with your app. |
+| [`Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql`](https://www.nuget.org/packages/Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql) | runtime | `UseDesignerlessMigrations()`: makes migrations without a Designer file generate the same SQL as with one. |
 
 Package versions follow EF Core majors: **10.x is for EF Core 10** (`net10.0`, Npgsql.EntityFrameworkCore.PostgreSQL 10). Only the major is tied to EF: minor and patch are this project's own (`10.0.1` is a fix to these packages, not a build for EF 10.0.1), and every 10.x release works with any EF Core 10 patch from 10.0.2 on.
 
@@ -19,6 +22,20 @@ Package versions follow EF Core majors: **10.x is for EF Core 10** (`net10.0`, N
 dotnet add package Moberg.EntityFrameworkCore.DesignerlessMigrations
 dotnet add package Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql
 ```
+
+Or add them to the `.csproj` by hand. The design package keeps `PrivateAssets` so it stays out of your published app and out of projects that reference this one:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Moberg.EntityFrameworkCore.DesignerlessMigrations" Version="10.0.0">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+  <PackageReference Include="Moberg.EntityFrameworkCore.DesignerlessMigrations.Npgsql" Version="10.0.0" />
+</ItemGroup>
+```
+
+With central package management, put the two versions in `Directory.Packages.props` as `<PackageVersion>` items and drop `Version` here.
 
 **2. Add `UseDesignerlessMigrations()` after `UseNpgsql(...)`.** That is the only code change:
 
